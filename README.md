@@ -28,28 +28,42 @@ We would like you to follow this:
 * System should allow user to sign up for the app. Signed up user will automatically became "account owner".
   
 * An account will be created after sign up. The account is security scope so all what is defined inside 
-  (projects, team member, stories).
+  (projects, team member, stories) shouldn't be visible by users for another account.
 
-* Account owner is able to create, read, update and delete Team members
+* Account owner is able to create, read, update and delete Developers
 
-* Each team member will have its own user in the system, first name, last name, email, password.
+* Each developer will have its own user in the system, first name, last name, email and password.
 
-* Developer is able to create, read, update and delete project. 
+* Account owner is able to create, read, update and delete Projects
 
 * Each project has its title, description, client, due date and manager.
 
-* Developer can create, read, update and delete story
+* Each developer is able to sign in and see projects within his account.
+
+* Developer is able to read project. Is not able to delete, update or create projects.
+
+* Developer can create, read, update and delete story.
 
 * Each story has its title, description, estimation on point scale (1,2,3,5,8,20,100), 
   requestor (person who created) and responsible person (requestor or another member of 
   the project team) and state (possible states are listed bellow)
 
-* Each story has life-cycle as waiting / started / finished / delivered / accepted / rejected.
+* Each story has life-cycle as not ready / waiting / started / finished / delivered / accepted / rejected.
 
 * Developer can change story states like this: 
+  not ready > waiting
   waiting > started, 
   started > finished, 
   finished > delivered,  
   delivered > rejected, 
   rejected > started,
   delivered > accepted.
+
+* In project page there should be visible how much stories are accepted, how much stories are in progress (started, finished, delivered) and how much stories are waiting.
+
+* Stories should be displayed in the ordered list, Developer should be able to adjust order (arrows up/down or drag'n'drop).
+
+For inspiration how UI should look check this https://www.pivotaltracker.com/. Its professional Agile project management
+tool, which include features described above + many others.
+
+Good Luck!
