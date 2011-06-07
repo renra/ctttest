@@ -1,4 +1,4 @@
-== CTT Innovations | Rails ninja test
+## CTT Innovations | Rails ninja test
 
 Dear ninja, 
 
