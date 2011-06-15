@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @story.title %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @story.description %>
+</p>
+
+<p>
+  <b>Scale level:</b>
+  <%= @story.scale_level_id %>
+</p>
+
+<p>
+  <b>Requestor:</b>
+  <%= @story.requestor_id %>
+</p>
+
+<p>
+  <b>Responson:</b>
+  <%= @story.responson_id %>
+</p>
+
+<p>
+  <b>Life cycle phase:</b>
+  <%= @story.life_cycle_phase_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_story_path(@story) %> |
+<%= link_to 'Back', stories_path %>

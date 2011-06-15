@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  description: MyText
+  scale_level_id: 1
+  requestor_id: 1
+  responson_id: 1
+  life_cycle_phase_id: 1
+
+two:
+  title: MyString
+  description: MyText
+  scale_level_id: 1
+  requestor_id: 1
+  responson_id: 1
+  life_cycle_phase_id: 1

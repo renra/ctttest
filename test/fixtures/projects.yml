@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  description: MyString
+  client: MyString
+  deadline: 2011-06-15 10:01:51
+  manager_id: 1
+
+two:
+  title: MyString
+  description: MyString
+  client: MyString
+  deadline: 2011-06-15 10:01:51
+  manager_id: 1
