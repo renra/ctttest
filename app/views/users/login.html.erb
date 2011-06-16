@@ -1,0 +1,9 @@
+<h1>Please provide your credentials</h1>
+<% form_for @user_session, :url => login_path do |f| %>
+  <%= f.text_field :email %> <br />
+  <%= f.label :email %><br />
+  <%= f.password_field :password %> <br />
+  <%= f.label :password %><br />
+    
+  <%= submit_tag 'Authenticate' %>
+<% end %>

@@ -8,6 +8,31 @@
 </head>
 <body>
 
+<% if RAILS_ENV=='development' %>
+  <div>
+    <%= session.inspect %>
+  </div>
+<% end %>
+
+
+<% if flash[:notice] %>
+  <div>
+    <p id="notice"><%= notice %></p>
+  </div>
+<% end %>
+
+<% if flash[:error] %>
+  <div>
+    <p id="error"><%= flash[:error] %></p>
+  </div>
+<% end %>
+
+<div>
+  <% if current_user %>
+    <%= link_to 'Logout', logout_path %>
+  <% end %>
+</div>
+
 <%= yield %>
 
 </body>

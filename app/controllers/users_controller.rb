@@ -1,4 +1,33 @@
 class UsersController < ApplicationController
+  skip_before_filter :require_auth, :only => [:login, :signup]
+
+  def login
+    @user_session = UserSession.new
+
+    if request.post?
+      # just to be sure, seems like authlogic does not reset it by itself
+      reset_session
+      session = UserSession.new(params[:user_session])
+      if session.save
+        flash[:notice] = 'User authenticated. Welcome inside.'
+        redirect_to projects_path
+      else
+        flash[:error] = 'Authentication failed. Raising an eybrow.'
+      end
+    end
+  end
+
+  def signup
+    #filter id
+  end
+
+  def logout
+    current_user_session.destroy
+    flash[:notice] = 'Goodbye. Remember me well.'
+    redirect_to login_path
+  end
+ 
+
   # GET /users
   # GET /users.xml
   def index
@@ -43,7 +72,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
 
     respond_to do |format|
-      if @user.save
+      if @user.save_without_session_maintenance
         format.html { redirect_to(@user, :notice => 'User was successfully created.') }
         format.xml  { render :xml => @user, :status => :created, :location => @user }
       else
@@ -73,6 +102,12 @@ class UsersController < ApplicationController
   # DELETE /users/1.xml
   def destroy
     @user = User.find(params[:id])
+
+    if @user.id == current_user.id
+      flash.now[:notice] = 'You have just destroyed yourself. Destroying your session too'
+      current_user_session.destroy
+    end
+
     @user.destroy
 
     respond_to do |format|
