@@ -1,13 +1,22 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  first_name: MyString
-  last_name: MyString
-  email: MyString
-  password: MyString
+honza:
+  id: 1
+  first_name: honza
+  last_name: gloser
+  email: honza.gloser@centrum.cz
+  password: test
 
-two:
-  first_name: MyString
-  last_name: MyString
-  email: MyString
-  password: MyString
+jan:
+  id: 2
+  first_name: jan
+  last_name: gloser
+  email: jan.gloser@centrum.cz
+  password: test
+
+jacques:
+  id: 3
+  first_name: jacques
+  last_name: cousto
+  email: jacques@centrum.cz
+  password: test

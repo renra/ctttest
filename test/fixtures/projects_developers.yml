@@ -6,4 +6,8 @@ one:
 
 two:
   project_id: 1
-  developer_id: 1
+  developer_id: 2
+
+two:
+  project_id: 1
+  developer_id: 3

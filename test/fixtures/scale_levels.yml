@@ -1,7 +1,53 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
+  id: 1
   level: 1
 
 two:
-  level: 1
+  id: 2
+  level: 2
+
+three:
+  id: 3
+  level: 3
+
+four:
+  id: 4
+  level: 5
+
+five:
+  id: 5
+  level: 8
+
+six:
+  id: 6
+  level: 10
+
+seven:
+  id: 7
+  level: 20
+
+eight:
+  id: 8
+  level: 35
+
+nine:
+  id: 9
+  level: 50
+
+ten:
+  id: 10
+  level: 75
+
+eleven:
+  id: 11
+  level: 90
+
+twelve:
+  id: 12
+  level: 99
+
+thirteen:
+  id: 13
+  level: 100

@@ -1,7 +1,29 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  phase: MyString
+  id: 1
+  phase: 'not ready'
 
 two:
-  phase: MyString
+  id: 2
+  phase: waiting
+
+three:
+  id: 3
+  phase: started
+
+four:
+  id: 4
+  phase: finished
+
+five:
+  id: 5
+  phase: delivered
+
+six:
+  id: 6
+  phase: accepted
+
+seven:
+  id: 7
+  phase: rejected

@@ -5,6 +5,20 @@ class UsersControllerTest < ActionController::TestCase
     @user = users(:one)
   end
 
+  test "should log in" do
+    get :login
+    assert_response :success
+    post :login, :user_session => {:email => users(:jan).email, :password => users(:jan).password}
+    assert_response :success
+    assert_redirected_to projects_path
+  end
+
+  test "should log out" do
+    get :logout
+    assert_response :success
+    assert_redirected_to :login
+  end
+
   test "should get index" do
     get :index
     assert_response :success

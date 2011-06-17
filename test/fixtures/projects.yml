@@ -1,15 +1,17 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  title: MyString
-  description: MyString
-  client: MyString
+charita:
+  id: 1
+  title: 'Udelame neco dobreho'
+  description: 'Super projekt pro charitu'
+  client: 'The world'
   deadline: 2011-06-15 10:01:51
   manager_id: 1
 
-two:
-  title: MyString
-  description: MyString
-  client: MyString
-  deadline: 2011-06-15 10:01:51
+banka:
+  id: 2
+  title: 'Novy bankovni system'
+  description: 'Vydelame spoustu penez'
+  client: 'CSOB'
+  deadline: 2020-06-15 10:01:51
   manager_id: 1

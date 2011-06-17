@@ -8,6 +8,8 @@ gem 'rails', '3.0.7'
 
 gem 'sqlite3'
 gem 'authlogic'
+gem 'cancan'
+gem 'factory_girl_rails'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -22,7 +24,7 @@ gem 'authlogic'
 # Bundle the extra gems:
 # gem 'bj'
 # gem 'nokogiri'
-# gem 'sqlite3-ruby', :require => 'sqlite3'
+gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 
 # Bundle gems for the local environment. Make sure to

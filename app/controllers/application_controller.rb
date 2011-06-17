@@ -1,7 +1,14 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_session, :current_user
-  before_filter :require_auth
+  # do through CanCan
+  #before_filter :require_auth
+
+  rescue_from CanCan::AccessDenied do |exc|
+    flash[:notice] = current_user ? 'Access denied. Shoo!' : 'Please log in first'
+    redirect_path = current_user ? projects_path : login_path
+    redirect_to redirect_path
+  end
 
   protected
   def current_user_session
@@ -13,6 +20,10 @@ class ApplicationController < ActionController::Base
     return @current_user if defined?(@current_user)
     @current_user = current_user_session && current_user_session.user
   end
+
+  #def current_ability
+  #  Ability.new(current_user)
+  #end
 
   def require_auth
     unless current_user

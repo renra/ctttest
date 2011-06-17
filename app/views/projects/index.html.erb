@@ -12,6 +12,22 @@
     <th></th>
   </tr>
 
+<h3>Owned projects</h3>
+<% @owned_projects.each do |project| %>
+  <tr>
+    <td><%= project.title %></td>
+    <td><%= project.description %></td>
+    <td><%= project.client %></td>
+    <td><%= project.deadline %></td>
+    <td><%= project.manager_id %></td>
+    <td><%= link_to 'Show', project %></td>
+    <td><%= link_to 'Edit', edit_project_path(project) %></td>
+    <td><%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<h3>You are a developer on these projects</h3>
 <% @projects.each do |project| %>
   <tr>
     <td><%= project.title %></td>
