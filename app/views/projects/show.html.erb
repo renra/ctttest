@@ -20,9 +20,56 @@
 
 <p>
   <b>Manager:</b>
-  <%= @project.manager_id %>
+  <%= @project.manager.email %>
 </p>
 
 
-<%= link_to 'Edit', edit_project_path(@project) %> |
+<h3>This project has <%= pluralize(@project.stories.count, 'story') %> (<%= @counts[:waiting] %> waiting, 
+                                                                    <%= @counts[:in_progress] %> in progress and 
+                                                                    <%= @counts[:accepted] %> accepted)</h3>
+<div class="stories_list">
+  <ol>
+    <% @project.stories.each_with_index do |story, index| %>
+      <% story_id = "story_#{index+1}" %>
+      <li class="story" id=<%= story_id %>>
+        <div><%= story.requestor.email %> has written:</div>
+        <div><%= story.title %></div>
+        <div><%= story.description %></div>
+        <div><%= story.life_cycle_phase.phase %></div>
+        <div><%= story.responson.email %> is responsible for this</div>
+        <div>
+          <% if can? :read, story %>
+            <%= link_to 'Show', project_story_path(@project, story) %><br />
+          <% end %>
+          <% if can? :update, story %>
+            <%= link_to 'Edit', edit_project_story_path(@project, story) %><br />
+          <% end %>
+          <% if can? :destroy, story %>
+            <%= link_to 'Delete', project_story_path(@project, story), :method => :delete, :confirm => 'Are you sure?' %><br />
+          <% end %>
+        </div>
+      </li>
+      <%= draggable_element(story_id, :revert => true) %>
+    <% end %>
+  </ol>
+</div>
+
+<h3>This project has <%= pluralize(@project.developers.count, 'developer') %></h3>
+<div class="developers_list">
+  <ul>
+    <% @project.developers.each do |developer| %>
+      <li>
+        <%= developer.email %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+
+<% if can? :update, @project %>
+  <%= link_to 'Edit', edit_project_path(@project) %> | <%= link_to 'Assign developers', assign_project_path(@project) %> | 
+<% end %>
+<% if can? :create, Story %>
+  <%= link_to 'Write a story', new_project_story_path(@project) %> | 
+<% end %>
 <%= link_to 'Back', projects_path %>

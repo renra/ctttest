@@ -1,86 +1,87 @@
 class StoriesController < ApplicationController
   before_filter :require_auth, :only => :index
-  load_and_authorize_resource :except => :index
+  load_and_authorize_resource :except => [:index, :show]
+  authorize_resource :only => :show
 
   # GET /stories
-  # GET /stories.xml
   def index
-    @stories = Story.all
+    @stories = Story.where(:project_id => params[:project_id])
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @stories }
     end
   end
 
   # GET /stories/1
-  # GET /stories/1.xml
   def show
-    #@story = Story.find(params[:id])
+    @story = Story.find(params[:id], :include => [:scale_level, :life_cycle_phase, :requestor, :responson])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @story }
     end
   end
 
   # GET /stories/new
-  # GET /stories/new.xml
   def new
     #@story = Story.new
+    @project = Project.find(params[:project_id], :include => :developers)
+    @levels = ScaleLevel.all
+    @phases = LifeCyclePhase.available_phases
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @story }
     end
   end
 
   # GET /stories/1/edit
   def edit
     #@story = Story.find(params[:id])
+    @project = Project.find(params[:project_id], :include => :developers)
+    @levels = ScaleLevel.all
+    @phases = LifeCyclePhase.available_phases(@story.life_cycle_phase)
   end
 
   # POST /stories
-  # POST /stories.xml
   def create
-    #@story = Story.new(params[:story])
+    @project = Project.find(params[:project_id], :include => :developers)
+    @levels = ScaleLevel.all
+    @phases = LifeCyclePhase.available_phases
+
+    @story.requestor = current_user
+    @story.project_id = params[:project_id]
 
     respond_to do |format|
       if @story.save
-        format.html { redirect_to(@story, :notice => 'Story was successfully created.') }
-        format.xml  { render :xml => @story, :status => :created, :location => @story }
+        format.html { redirect_to(project_story_path(@project, @story), :notice => 'Story was successfully created.') }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @story.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # PUT /stories/1
-  # PUT /stories/1.xml
   def update
     #@story = Story.find(params[:id])
+    @project = Project.find(params[:project_id], :include => :developers)
+    @levels = ScaleLevel.all
+    @phases = LifeCyclePhase.available_phases(@story.life_cycle_phase)
 
     respond_to do |format|
       if @story.update_attributes(params[:story])
-        format.html { redirect_to(@story, :notice => 'Story was successfully updated.') }
-        format.xml  { head :ok }
+        format.html { redirect_to(project_path(params[:project_id]), :notice => 'Story was successfully updated.') }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @story.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # DELETE /stories/1
-  # DELETE /stories/1.xml
   def destroy
     #@story = Story.find(params[:id])
     @story.destroy
 
     respond_to do |format|
-      format.html { redirect_to(stories_url) }
-      format.xml  { head :ok }
+      format.html { redirect_to(project_url(params[:project_id])) }
     end
   end
 end

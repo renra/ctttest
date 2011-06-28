@@ -1,47 +1,58 @@
 <h1>Listing projects</h1>
 
+<% if current_user.owner? %>
 <table>
   <tr>
     <th>Title</th>
     <th>Description</th>
     <th>Client</th>
     <th>Deadline</th>
-    <th>Manager</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<h3>Owned projects</h3>
+<h3>You now own <%= pluralize(@owned_projects.count, "project") %></h3>
 <% @owned_projects.each do |project| %>
   <tr>
     <td><%= project.title %></td>
     <td><%= project.description %></td>
     <td><%= project.client %></td>
     <td><%= project.deadline %></td>
-    <td><%= project.manager_id %></td>
     <td><%= link_to 'Show', project %></td>
     <td><%= link_to 'Edit', edit_project_path(project) %></td>
     <td><%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
+<% end %>
 
-<h3>You are a developer on these projects</h3>
+<h3>You are a developer on <%= pluralize(@projects.count, "project") %></h3>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Client</th>
+    <th>Deadline</th>
+    <th></th>
+  </tr>
 <% @projects.each do |project| %>
   <tr>
     <td><%= project.title %></td>
     <td><%= project.description %></td>
     <td><%= project.client %></td>
     <td><%= project.deadline %></td>
-    <td><%= project.manager_id %></td>
-    <td><%= link_to 'Show', project %></td>
-    <td><%= link_to 'Edit', edit_project_path(project) %></td>
-    <td><%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td>
+      <% if can? :read, project %>
+        <%= link_to 'Show', project %>
+      <% end %>
+    </td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
+<% if can? :create, Project %>
 <%= link_to 'New Project', new_project_path %>
+<% end %>

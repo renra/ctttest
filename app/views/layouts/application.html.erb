@@ -35,5 +35,14 @@
 
 <%= yield %>
 
+<% if current_user %>
+  <div class="bottom_links">
+    <%= link_to 'Projects', projects_path %> <br />
+    <% if can? :create, User %>
+     <%= link_to 'Team Members', users_path %><br />
+    <% end %>
+  </div>
+<% end %>
+
 </body>
 </html>

@@ -4,6 +4,22 @@ class Project < ActiveRecord::Base
   belongs_to :account
   belongs_to :manager, :class_name => 'User'
   has_many :stories
-  has_and_belongs_to_many :developers, :class_name => 'User', :association_foreign_key => 'developer_id', :join_table => 'projects_developers'
-  #, :class_name => 'User', :foreign_key => 'developer_id'
+  has_many :projects_developers
+  has_many :developers, :through => :projects_developers
+
+  def count_stories
+    waiting_count, in_progress_count, accepted_count = 0, 0, 0
+    stories.each {|story| 
+      case story.life_cycle_phase.phase
+        when 'waiting'
+          waiting_count += 1
+        when 'started', 'finished', 'delivered'
+          in_progress_count += 1
+        when 'accepted'
+          accepted_count += 1
+      end
+    }
+    
+    {:waiting => waiting_count, :in_progress => in_progress_count, :accepted => accepted_count}
+  end
 end

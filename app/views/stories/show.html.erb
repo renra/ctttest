@@ -9,25 +9,26 @@
 </p>
 
 <p>
-  <b>Scale level:</b>
-  <%= @story.scale_level_id %>
+  <b>Estimation:</b>
+  <%= @story.scale_level.level %>
 </p>
 
 <p>
   <b>Requestor:</b>
-  <%= @story.requestor_id %>
+  <%= @story.requestor.email %>
 </p>
 
 <p>
   <b>Responson:</b>
-  <%= @story.responson_id %>
+  <%= @story.responson.email %>
 </p>
 
 <p>
   <b>Life cycle phase:</b>
-  <%= @story.life_cycle_phase_id %>
+  <%= @story.life_cycle_phase.phase %>
 </p>
 
-
-<%= link_to 'Edit', edit_story_path(@story) %> |
-<%= link_to 'Back', stories_path %>
+<% if can? :update, @story %>
+<%= link_to 'Edit', edit_project_story_path(params[:project_id], @story) %> |
+<% end %>
+<%= link_to 'Back', project_path(params[:project_id]) %>

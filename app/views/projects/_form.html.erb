@@ -28,8 +28,8 @@
     <%= f.datetime_select :deadline %>
   </div>
   <div class="field">
+    <%= collection_select(:project, :manager_id, @potencional_managers, :id, :email) %>
     <%= f.label :manager_id %><br />
-    <%= f.text_field :manager_id %>
   </div>
   <div class="actions">
     <%= f.submit %>

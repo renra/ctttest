@@ -21,13 +21,13 @@
     <td><%= story.requestor_id %></td>
     <td><%= story.responson_id %></td>
     <td><%= story.life_cycle_phase_id %></td>
-    <td><%= link_to 'Show', story %></td>
-    <td><%= link_to 'Edit', edit_story_path(story) %></td>
-    <td><%= link_to 'Destroy', story, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Show', project_story_path(params[:project_id], story.id) %></td>
+    <td><%= link_to 'Edit', edit_project_story_path(params[:project_id], story.id) %></td>
+    <td><%= link_to 'Destroy', project_story_path(params[:project_id], story.id), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Story', new_story_path %>
+<%= link_to 'New Story', new_project_story_path %>

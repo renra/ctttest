@@ -1,0 +1,9 @@
+<h1>You can choose from these members of your team</h1>
+
+<% form_tag assign_project_path(@project) do %>
+<% @team_members.each do |member| %>
+  <%= check_box_tag "assigned_developers[#{member.id}]", true, @developers.include?(member) %> <%= label_tag member.email %><br />
+<% end %>
+
+<%= submit_tag 'Submit' %>
+<% end %>

@@ -4,9 +4,12 @@ Ctttest::Application.routes.draw do
   match 'logout' => 'users#logout'
 
 
-  resources :stories
-
-  resources :projects
+  resources :projects do
+    member do
+      match 'assign', :via => [:get, :post]
+    end
+    resources :stories
+  end
 
   resources :users
 

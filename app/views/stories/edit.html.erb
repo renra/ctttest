@@ -1,6 +1,6 @@
 <h1>Editing story</h1>
 
-<%= render 'form' %>
+<%= render :partial => 'form', :locals => {:action => 'update'} %>
 
-<%= link_to 'Show', @story %> |
-<%= link_to 'Back', stories_path %>
+<%= link_to 'Show', project_story_path(params[:project_id], @story) %> |
+<%= link_to 'Back', project_path(params[:project_id]) %>
