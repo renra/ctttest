@@ -1,0 +1,12 @@
+<h1>Recruit members</h1>
+
+<% if @users.empty? %>
+  <div>Nobody to recruit</div>
+<% else %>
+  <% form_tag recruit_users_path do %>
+    <% @users.each do |u| %>
+      <%= check_box_tag "recruits[#{u.id}]", true, @team_members.include?(u) %> <%= label_tag u.email %><br />
+    <% end %>
+    <%= submit_tag 'Submit' %>
+  <% end %>
+<% end %>

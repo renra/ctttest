@@ -14,9 +14,9 @@ class Ability
           user.owned_projects.include?( project )
         end
 
-        can :create, User
-        can [:read, :update, :destroy], User do |user_subject|
-          user.account.team_members.any? {|team_member| team_member.id == user_subject.id}
+        can [:create, :recruit], User
+        can [:read, :update, :dismiss], User do |user_subject|
+          user.account.team_members.any? {|team_member| (team_member.id == user_subject.id) && (team_member.id != user.id) }
         end
 
         can :read, Story do |story|
@@ -25,13 +25,14 @@ class Ability
       end
 
       if user.developer?
-        can :read, Project do |project|
-          user.projects.any? {|p| p.id == project.id}
+        can [:read, :adjust_order], Project do |project|
+          #user.projects.any? {|p| p.id == project.id}
+          user.projects.include?( project )
         end
 
         can :create, Story
 
-        can :read, Story do |story|
+        can [:read, :adjust_order], Story do |story|
           user.projects.any? {|project| project.id == story.project_id}
         end
         can [:update, :destroy], Story do |story|

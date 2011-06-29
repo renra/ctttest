@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_filter :require_auth, :only => :index
-  load_and_authorize_resource :except => [:login, :logout, :signup, :index]
+  before_filter :require_owner, :only => :index
+  load_and_authorize_resource :except => [:login, :logout, :signup, :index, :recruit]
+  authorize_resource :only => :recruit
 
   def login
     @user_session = UserSession.new
@@ -114,4 +116,25 @@ class UsersController < ApplicationController
       format.html { redirect_to(users_url) }
     end
   end
+
+  def recruit
+    @users = User.where( 'id != ?', current_user.id )
+    @team_members = current_user.account.team_members
+    recruits = params[:recruits].nil? ? [] : params[:recruits].keys
+
+    if request.post?
+      current_user.recruit_team_members( current_user.account.id, recruits )
+      flash[:notice] = 'Team updated'
+      redirect_to users_path
+    end
+  end
+
+  def dismiss
+    current_user.dismiss( @user )
+
+    respond_to do |format|
+      format.html { redirect_to(users_url) }
+    end
+  end
+
 end

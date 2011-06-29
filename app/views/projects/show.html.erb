@@ -24,19 +24,20 @@
 </p>
 
 
-<h3>This project has <%= pluralize(@project.stories.count, 'story') %> (<%= @counts[:waiting] %> waiting, 
-                                                                    <%= @counts[:in_progress] %> in progress and 
-                                                                    <%= @counts[:accepted] %> accepted)</h3>
-<div class="stories_list">
-  <ol>
-    <% @project.stories.each_with_index do |story, index| %>
-      <% story_id = "story_#{index+1}" %>
-      <li class="story" id=<%= story_id %>>
-        <div><%= story.requestor.email %> has written:</div>
+<h3>This project has <%= pluralize(@counts[:total], 'story') %> (<%= @counts[:not_ready] %> not ready,
+                                                                 <%= @counts[:waiting] %> waiting, 
+                                                                 <%= @counts[:in_progress] %> in progress,
+                                                                 <%= @counts[:accepted] %> accepted and
+                                                                 <%= @counts[:rejected] %> rejected)</h3>
+<div>
+  <ol id="stories_list">
+    <% @project.stories.each do |story| %>
+      <li id="item_<%= story.id %>">
+        <div><%= story.requestor.email rescue 'DELETED' %> has written:</div>
         <div><%= story.title %></div>
         <div><%= story.description %></div>
         <div><%= story.life_cycle_phase.phase %></div>
-        <div><%= story.responson.email %> is responsible for this</div>
+        <div><%= story.responson.email rescue 'DELETED' %> is responsible for this</div>
         <div>
           <% if can? :read, story %>
             <%= link_to 'Show', project_story_path(@project, story) %><br />
@@ -49,9 +50,12 @@
           <% end %>
         </div>
       </li>
-      <%= draggable_element(story_id, :revert => true) %>
     <% end %>
   </ol>
+  <% if can? :adjust_order, @project %>
+    <%= sortable_element "stories_list", :url => adjust_order_project_stories_path(@project),
+                                         :complete => visual_effect(:highlight, "stories_list") %>
+  <% end %>
 </div>
 
 <h3>This project has <%= pluralize(@project.developers.count, 'developer') %></h3>

@@ -21,9 +21,15 @@
     <td><%= story.requestor_id %></td>
     <td><%= story.responson_id %></td>
     <td><%= story.life_cycle_phase_id %></td>
-    <td><%= link_to 'Show', project_story_path(params[:project_id], story.id) %></td>
-    <td><%= link_to 'Edit', edit_project_story_path(params[:project_id], story.id) %></td>
-    <td><%= link_to 'Destroy', project_story_path(params[:project_id], story.id), :confirm => 'Are you sure?', :method => :delete %></td>
+    <% if can? :read, story %>
+      <td><%= link_to 'Show', project_story_path(params[:project_id], story.id) %></td>
+    <% end %>
+    <% if can? :update, story %>
+      <td><%= link_to 'Edit', edit_project_story_path(params[:project_id], story.id) %></td>
+    <% end %>
+    <% if can? :destroy, story %>
+      <td><%= link_to 'Destroy', project_story_path(params[:project_id], story.id), :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>

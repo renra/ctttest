@@ -10,6 +10,7 @@ gem 'sqlite3'
 gem 'authlogic'
 gem 'cancan'
 gem 'factory_girl_rails'
+gem 'acts_as_list'
 
 # Use unicorn as the web server
 # gem 'unicorn'

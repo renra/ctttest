@@ -3,15 +3,19 @@ Ctttest::Application.routes.draw do
   match 'signup' => 'users#signup'
   match 'logout' => 'users#logout'
 
-
   resources :projects do
     member do
       match 'assign', :via => [:get, :post]
     end
-    resources :stories
+    resources :stories do
+      match 'adjust_order', :on => :collection, :via => :post
+    end
   end
 
-  resources :users
+  resources :users do
+    match 'recruit', :on => :collection, :via => [:get, :post]
+    match 'dismiss', :on => :member, :via => :post
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

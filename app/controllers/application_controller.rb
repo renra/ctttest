@@ -21,14 +21,17 @@ class ApplicationController < ActionController::Base
     @current_user = current_user_session && current_user_session.user
   end
 
-  #def current_ability
-  #  Ability.new(current_user)
-  #end
-
   def require_auth
     unless current_user
       flash[:notice] = 'You must authenticate first'
       redirect_to login_path
+    end
+  end
+
+  def require_owner
+    unless current_user.owner?
+      flash[:notice] = 'You must be and account owner to go there'
+      redirect_to root_path
     end
   end
 end

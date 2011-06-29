@@ -1,7 +1,7 @@
 class StoriesController < ApplicationController
   before_filter :require_auth, :only => :index
-  load_and_authorize_resource :except => [:index, :show]
-  authorize_resource :only => :show
+  load_and_authorize_resource :except => [:index, :show, :adjust_order]
+  authorize_resource :only => [:show, :adjust_order]
 
   # GET /stories
   def index
@@ -20,6 +20,7 @@ class StoriesController < ApplicationController
       format.html # show.html.erb
     end
   end
+
 
   # GET /stories/new
   def new
@@ -84,4 +85,17 @@ class StoriesController < ApplicationController
       format.html { redirect_to(project_url(params[:project_id])) }
     end
   end
+
+  def adjust_order
+    @stories = Story.find(params[:stories_list])
+    @stories.each do |story|
+      story.position = params[:stories_list].index(story.id.to_s)+1
+      story.save
+    end
+ 
+    respond_to do |format|
+      format.js
+    end
+  end
+
 end
