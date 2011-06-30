@@ -123,7 +123,7 @@ class UsersController < ApplicationController
     recruits = params[:recruits].nil? ? [] : params[:recruits].keys
 
     if request.post?
-      current_user.recruit_team_members( current_user.account.id, recruits )
+      current_user.recruit_team_members( recruits )
       flash[:notice] = 'Team updated'
       redirect_to users_path
     end

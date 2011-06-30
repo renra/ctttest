@@ -2,6 +2,23 @@ Factory.sequence :email do |n|
   "email_number_#{n}@middleearth.me"
 end
 
+Factory.define :user do |u|
+  u.email { Factory.next(:email) }
+  u.after_build {|u| u.generate_password}
+end
+
+Factory.define :bald_user, :class => User, :default_strategy => :build do |u|
+end
+
+Factory.define :user_with_email_only, :class => User, :default_strategy => :build do |u|
+  u.email { Factory.next(:email) }
+end
+
+Factory.define :user_with_email_and_password_only, :class => User, :default_strategy => :build do |u|
+  u.email 'nonsens@void.ns'
+  u.password 'random'
+end
+
 Factory.define :gandalf, :class => User, :default_strategy => :create do |owner|
   owner.first_name 'Gandalf'
   owner.association :account

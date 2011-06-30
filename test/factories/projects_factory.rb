@@ -46,3 +46,8 @@ Factory.define :side_bad_project, :class => Project do |p|
   p.deadline Time.now+1.year
   p.after_create {|p| p.developers <<  User.where(:email => 'rider@middleearth.me') }
 end
+
+Factory.define :project do |p|
+  p.title 'Default'
+  p.description 'Nada'
+end

@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   end
 
   def generate_password
-    if RAILS_ENV == 'development'
+    if Rails.env.development?
       pass = 'random'
     else
       pass = SecureRandom.hex(8)
@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
     project = Project.find( project_id, :include => :developers )
 
     begin
-      project.developers = User.find(developer_ids)
+      project.developers = User.find(developer_ids.to_a)
     rescue
       project.developers = []
     end
@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
   end
 
 
-  def add_team_member( acc_id = account.id, member = self )
+  def add_team_member( acc_id = self.account.id, member = self )
     if member.is_a?(Integer)
       team_member_id = member
     elsif member.is_a?(User)
@@ -75,14 +75,9 @@ class User < ActiveRecord::Base
     relation.save
   end
 
-  def recruit_team_members( acc_id = account.id, recruit_ids = [] )
-    account.team_members = []
-
-    add_team_member( acc_id )
-
-    for id in recruit_ids
-      add_team_member( acc_id, id.to_i )
-    end
+  def recruit_team_members( recruit_ids )
+    account.team_members = [self] + User.find(recruit_ids).to_a
+    save
   end
 
 

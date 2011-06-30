@@ -11,6 +11,12 @@ gem 'authlogic'
 gem 'cancan'
 gem 'factory_girl_rails'
 gem 'acts_as_list'
+gem 'autotest'
+gem 'capybara'
+
+group :test, :development do
+  gem 'rspec-rails', '~>2.4'
+end
 
 # Use unicorn as the web server
 # gem 'unicorn'
