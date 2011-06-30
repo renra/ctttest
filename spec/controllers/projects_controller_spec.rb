@@ -2,10 +2,10 @@ require 'spec_helper'
 require Rails.root.join('features', 'support', 'seed_data')
 
 describe ProjectsController do
-  before(:all) do
-    @gandalf = Factory(:gandalf)
-    @sauron = Factory(:sauron)
-  end
+  #before(:all) do
+  #  @gandalf = Factory(:gandalf)
+  #  @sauron = Factory(:sauron)
+  #end
 
   it "redirects to login page" do
     get :index

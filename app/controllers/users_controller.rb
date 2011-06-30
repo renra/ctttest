@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :require_auth, :only => :index
+  before_filter :require_auth, :only => [:index, :logout]
   before_filter :require_owner, :only => :index
   load_and_authorize_resource :except => [:login, :logout, :signup, :index, :recruit]
   authorize_resource :only => :recruit
@@ -13,7 +13,7 @@ class UsersController < ApplicationController
       session = UserSession.new(params[:user_session])
       if session.save
         flash[:notice] = 'User authenticated. Welcome inside.'
-        redirect_to projects_path
+        redirect_to root_path
       else
         flash[:error] = 'Authentication failed. Raising an eybrow.'
       end
@@ -23,6 +23,7 @@ class UsersController < ApplicationController
   def signup
    @user = User.new
    if request.post?
+     #raise params.to_yaml
      # mass assignment protection for id in application.rb
      @user.attributes = params[:user]
      if @user.save_with_account_and_become_team_member
